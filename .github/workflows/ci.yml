@@ -1,0 +1,146 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - name: Install tools
+        run: |
+          brew install swiftformat swiftlint
+      - name: Run lint scripts
+        run: ./scripts/lint.sh
+
+  test:
+    name: Unit Tests
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-swift-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-swift-
+      - name: Run tests
+        run: ./scripts/test.sh --enable-code-coverage
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: macos-14
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - name: Run integration suite
+        run: ./scripts/test.sh --filter Integration
+
+  live-epg-tests:
+    name: Live/EPG Tests
+    runs-on: macos-14
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-swift-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-swift-
+      - name: Run Live/EPG tests
+        run: ./scripts/test.sh --live
+
+  vod-series-tests:
+    name: VOD/Series Tests
+    runs-on: macos-14
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-swift-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-swift-
+      - name: Run VOD/Series tests
+        run: ./scripts/test.sh --vod-series
+
+  cache-benchmarks:
+    name: Cache Benchmarks
+    runs-on: macos-14
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-swift-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-swift-
+      - name: Run cache benchmarks
+        run: ./scripts/test.sh --benchmarks
+
+  build-matrix:
+    name: Build ${{ matrix.platform }}
+    runs-on: macos-14
+    needs: [lint, test]
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macOS, iOS, tvOS]
+        include:
+          - platform: macOS
+            destination: 'platform=macOS'
+            scheme: 'xtreamcode-swift-api'
+          - platform: iOS
+            destination: 'platform=iOS Simulator,name=iPhone 15,OS=17.5'
+            scheme: 'xtreamcode-swift-api'
+          - platform: tvOS
+            destination: 'platform=tvOS Simulator,name=Apple TV,OS=17.5'
+            scheme: 'xtreamcode-swift-api'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.10"
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-${{ matrix.platform }}-swift-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.platform }}-swift-
+      - name: Build for ${{ matrix.platform }}
+        run: |
+          if [ "${{ matrix.platform }}" = "macOS" ]; then
+            swift build -c release
+          else
+            xcodebuild -scheme "${{ matrix.scheme }}" \
+              -destination "${{ matrix.destination }}" \
+              -configuration Release \
+              build CODE_SIGNING_ALLOWED=NO
+          fi

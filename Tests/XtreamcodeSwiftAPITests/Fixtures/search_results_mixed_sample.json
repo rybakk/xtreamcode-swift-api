@@ -1,0 +1,41 @@
+[
+  {
+    "stream_type": "live",
+    "stream_id": 12345,
+    "name": "BBC One HD",
+    "category_id": "101",
+    "stream_icon": "https://example.com/logos/bbc_one.png",
+    "rating": "4.5"
+  },
+  {
+    "stream_type": "movie",
+    "vod_id": 130529,
+    "name": "Fight Club",
+    "category_id": "332",
+    "cover": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
+    "rating": "8.4"
+  },
+  {
+    "series_id": 5,
+    "name": "The Walking Dead",
+    "category_id": "361",
+    "cover": "https://i.pinimg.com/736x/d5/bb/60/d5bb60c2190748bdb0e92fdcd3426cc6.jpg",
+    "rating": "8.1"
+  },
+  {
+    "stream_type": "live",
+    "stream_id": 67890,
+    "name": "CNN International",
+    "category_id": "105",
+    "stream_icon": "https://example.com/logos/cnn.png",
+    "rating": "4.0"
+  },
+  {
+    "stream_type": "movie",
+    "vod_id": 145678,
+    "name": "The Matrix",
+    "category_id": "342",
+    "cover": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+    "rating": "8.7"
+  }
+]

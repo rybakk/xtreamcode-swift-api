@@ -1,0 +1,37 @@
+{
+  "epg_listings": [
+    {
+      "id": "epg_1001",
+      "title": "World News",
+      "lang": "en",
+      "description": "Top headlines from around the globe.",
+      "start": "2025-10-29 18:00:00",
+      "end": "2025-10-29 18:30:00",
+      "start_timestamp": "1761760800",
+      "stop_timestamp": "1761762600",
+      "channel_id": "BBCOne.uk"
+    },
+    {
+      "id": "epg_1002",
+      "title": "Evening Show",
+      "lang": "en",
+      "description": "Entertainment magazine with celebrity guests.",
+      "start": "2025-10-29 18:30:00",
+      "end": "2025-10-29 19:15:00",
+      "start_timestamp": "1761762600",
+      "stop_timestamp": "1761765300",
+      "channel_id": "BBCOne.uk"
+    },
+    {
+      "id": "epg_1003",
+      "title": "Drama Premiere",
+      "lang": "en",
+      "description": "Season premiere of the award-winning drama.",
+      "start": "2025-10-29 19:15:00",
+      "end": "2025-10-29 20:45:00",
+      "start_timestamp": "1761765300",
+      "stop_timestamp": "1761770700",
+      "channel_id": "BBCOne.uk"
+    }
+  ]
+}

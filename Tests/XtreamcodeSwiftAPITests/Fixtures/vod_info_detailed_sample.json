@@ -1,0 +1,55 @@
+{
+  "info": {
+    "tmdb_id": "550",
+    "name": "Fight Club",
+    "o_name": "Fight Club",
+    "cover_big": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
+    "movie_image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
+    "releasedate": "1999-10-15",
+    "episode_run_time": "139",
+    "youtube_trailer": "https://www.youtube.com/watch?v=SUXWAEX2jlg",
+    "director": "David Fincher",
+    "actors": "Brad Pitt, Edward Norton, Helena Bonham Carter",
+    "cast": "Brad Pitt, Edward Norton, Helena Bonham Carter, Meat Loaf",
+    "description": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy.",
+    "plot": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
+    "age": "R",
+    "mpaa_rating": "R",
+    "rating_count_kinopoisk": "645789",
+    "country": "United States, Germany",
+    "genre": "Drama",
+    "backdrop_path": [
+      "https://image.tmdb.org/t/p/w1280/hZkgoQYus5vegHoetLkCJzb17zJ.jpg",
+      "https://image.tmdb.org/t/p/w1280/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg"
+    ],
+    "duration_secs": 8340,
+    "duration": "02:19",
+    "video": {
+      "index": 0,
+      "codec_name": "h264",
+      "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+      "profile": "High",
+      "codec_type": "video",
+      "width": 1920,
+      "height": 1080
+    },
+    "audio": {
+      "index": 1,
+      "codec_name": "aac",
+      "codec_long_name": "AAC (Advanced Audio Coding)",
+      "codec_type": "audio"
+    },
+    "bitrate": 5420,
+    "rating": "8.4",
+    "rating_5based": 4.2
+  },
+  "movie_data": {
+    "stream_id": 130529,
+    "name": "Fight Club",
+    "added": "1535126376",
+    "category_id": "332",
+    "container_extension": "mp4",
+    "custom_sid": "",
+    "direct_source": ""
+  }
+}

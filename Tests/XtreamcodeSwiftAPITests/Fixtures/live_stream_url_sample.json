@@ -1,0 +1,25 @@
+{
+  "user_info": {
+    "username": "demo",
+    "status": "Active",
+    "exp_date": "1767225600"
+  },
+  "server_info": {
+    "url": "https://sanitized.example",
+    "port": "8443",
+    "https_port": "8443",
+    "server_protocol": "https"
+  },
+  "stream_urls": [
+    {
+      "quality": "1080p",
+      "container_extension": "m3u8",
+      "playlist_url": "https://sanitized.example:8443/live/demo/secret/36011.m3u8"
+    },
+    {
+      "quality": "720p",
+      "container_extension": "ts",
+      "playlist_url": "https://sanitized.example:8443/live/demo/secret/36011.ts"
+    }
+  ]
+}

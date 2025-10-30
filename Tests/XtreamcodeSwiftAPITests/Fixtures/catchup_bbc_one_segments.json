@@ -1,0 +1,28 @@
+[
+  {
+    "stream_id": 36011,
+    "stream_display_name": "UK: BBC ONE (HD) (720p)",
+    "num": 2,
+    "tv_archive": 1,
+    "tv_archive_duration": 168,
+    "tv_archive_days": 7,
+    "entries": [
+      {
+        "id": "archive_1001",
+        "title": "World News",
+        "start": "2025-10-28 18:00:00",
+        "end": "2025-10-28 18:30:00",
+        "duration": 1800,
+        "channel_id": "BBCOne.uk"
+      },
+      {
+        "id": "archive_1002",
+        "title": "Evening Show",
+        "start": "2025-10-28 18:30:00",
+        "end": "2025-10-28 19:15:00",
+        "duration": 2700,
+        "channel_id": "BBCOne.uk"
+      }
+    ]
+  }
+]

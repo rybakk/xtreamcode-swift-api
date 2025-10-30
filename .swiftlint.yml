@@ -1,0 +1,21 @@
+disabled_rules:
+  - trailing_whitespace
+  - orphaned_doc_comment
+
+opt_in_rules:
+  - closure_spacing
+  - explicit_init
+  - force_unwrapping
+
+line_length:
+  warning: 120
+  error: 130
+
+identifier_name:
+  allowed_symbols: ["_"]
+
+included:
+  - Sources
+  - Tests
+
+reporter: "github-actions-logging"

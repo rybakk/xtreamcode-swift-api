@@ -1,0 +1,125 @@
+{
+  "seasons": [
+    {
+      "air_date": "2011-04-17",
+      "episode_count": 10,
+      "id": 3624,
+      "name": "Season 1",
+      "overview": "Trouble is brewing in the Seven Kingdoms of Westeros.",
+      "season_number": 1,
+      "cover": "https://image.tmdb.org/t/p/w130_and_h195_bestv2/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg",
+      "cover_big": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg"
+    },
+    {
+      "air_date": "2012-04-01",
+      "episode_count": 10,
+      "id": 3625,
+      "name": "Season 2",
+      "overview": "The cold winds of winter are rising in Westeros.",
+      "season_number": 2,
+      "cover": "https://image.tmdb.org/t/p/w130_and_h195_bestv2/9xfNkPwDOqyeUvfNhs1XlWA0esP.jpg",
+      "cover_big": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/9xfNkPwDOqyeUvfNhs1XlWA0esP.jpg"
+    }
+  ],
+  "info": {
+    "name": "Game of Thrones",
+    "cover": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg",
+    "plot": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
+    "cast": "Peter Dinklage, Lena Headey, Emilia Clarke, Kit Harington",
+    "director": "David Benioff, D.B. Weiss",
+    "genre": "Sci-Fi & Fantasy, Drama, Action & Adventure",
+    "releaseDate": "2011-04-17",
+    "last_modified": "1626453456",
+    "rating": "8.4",
+    "rating_5based": 4.2,
+    "backdrop_path": [
+      "https://image.tmdb.org/t/p/w1280/suopoADq0k8YZr4dQXcU6pToj6s.jpg",
+      "https://image.tmdb.org/t/p/w1280/mUkuc2wyV9dHLG0D0Loaw5pO2s8.jpg"
+    ],
+    "youtube_trailer": "https://www.youtube.com/watch?v=rlR4PJn8b8I",
+    "episode_run_time": "60",
+    "category_id": "357"
+  },
+  "episodes": {
+    "1": [
+      {
+        "id": "63101",
+        "episode_num": 1,
+        "title": "Winter Is Coming",
+        "container_extension": "mp4",
+        "info": {
+          "tmdb_id": 63056,
+          "releasedate": "2011-04-17",
+          "plot": "Jon Arryn, the Hand of the King, is dead. King Robert Baratheon plans to ask his oldest friend, Eddard Stark, to take Jon's place.",
+          "duration_secs": 3720,
+          "duration": "01:02:00",
+          "movie_image": "https://image.tmdb.org/t/p/w500/wrGWeW4WKxnaeA8sxJb2T9O6ryo.jpg",
+          "bitrate": 4250,
+          "rating": "7.9"
+        },
+        "custom_sid": "",
+        "added": "1535126376",
+        "season": 1,
+        "direct_source": ""
+      },
+      {
+        "id": "63102",
+        "episode_num": 2,
+        "title": "The Kingsroad",
+        "container_extension": "mp4",
+        "info": {
+          "tmdb_id": 63057,
+          "releasedate": "2011-04-24",
+          "plot": "While Bran recovers from his fall, Ned takes only his daughters to King's Landing.",
+          "duration_secs": 3360,
+          "duration": "00:56:00",
+          "movie_image": "https://image.tmdb.org/t/p/w500/c4TvPqPMqJY5RBGqUXRlQ2bQsxc.jpg",
+          "bitrate": 4180,
+          "rating": "7.7",
+          "audio": [
+            {
+              "language": "English",
+              "codec": "aac"
+            }
+          ],
+          "subtitles": [
+            {
+              "language": "English",
+              "path": "https://example.com/subtitles/got_s01e02_en.srt"
+            },
+            {
+              "language": "French",
+              "path": "https://example.com/subtitles/got_s01e02_fr.srt"
+            }
+          ]
+        },
+        "custom_sid": "",
+        "added": "1535126376",
+        "season": 1,
+        "direct_source": ""
+      }
+    ],
+    "2": [
+      {
+        "id": "63201",
+        "episode_num": 1,
+        "title": "The North Remembers",
+        "container_extension": "mp4",
+        "info": {
+          "tmdb_id": 63063,
+          "releasedate": "2012-04-01",
+          "plot": "As Robb Stark and his northern army continue the war against the Lannisters.",
+          "duration_secs": 3180,
+          "duration": "00:53:00",
+          "movie_image": "https://image.tmdb.org/t/p/w500/dBmNiPjGDI2pxOaJ1CpmQrLx4zN.jpg",
+          "bitrate": 4300,
+          "rating": "8.1"
+        },
+        "custom_sid": "",
+        "added": "1535126456",
+        "season": 2,
+        "direct_source": ""
+      }
+    ]
+  }
+}
