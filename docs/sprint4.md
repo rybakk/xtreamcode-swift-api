@@ -145,15 +145,15 @@ Objectif : préparer le SDK pour une distribution multicanal (Swift Package Mana
   - [ ] Vidéos démo sur YouTube ou hébergement similaire.
 
 ## 8. Versioning & Release
-- [ ] Définir la stratégie de versioning (SemVer) :
-  - [ ] `1.0.0` pour première release stable.
-  - [ ] `MAJOR.MINOR.PATCH` pour évolutions futures.
-- [ ] Mettre à jour `CHANGELOG.md` :
-  - [ ] Section `[1.0.0] - YYYY-MM-DD` avec toutes les fonctionnalités.
-  - [ ] Sections `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
-- [ ] Créer un tag Git pour la release :
-  - [ ] `git tag -a v1.0.0 -m "Release 1.0.0"`.
-  - [ ] `git push origin v1.0.0`.
+- [x] Définir la stratégie de versioning (SemVer) :
+  - [x] `1.0.0` pour première release stable.
+  - [x] `MAJOR.MINOR.PATCH` pour évolutions futures.
+- [x] Mettre à jour `CHANGELOG.md` :
+  - [x] Section `[1.0.0] - 2025-10-30` avec toutes les fonctionnalités.
+  - [x] Sections `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
+- [x] Créer un tag Git pour la release :
+  - [x] `git tag -a v1.0.0 -m "Release 1.0.0"`.
+  - [ ] `git push origin v1.0.0` (à faire lors du push vers remote).
 - [ ] Créer une GitHub Release :
   - [ ] Titre : "v1.0.0 - Initial Release".
   - [ ] Description : résumé des fonctionnalités, liens documentation.

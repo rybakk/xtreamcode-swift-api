@@ -105,6 +105,17 @@ jobs:
       - name: Run cache benchmarks
         run: ./scripts/test.sh --benchmarks
 
+  cocoapods-lint:
+    name: CocoaPods Lint
+    runs-on: macos-14
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+      - name: Lint podspec
+        run: ./scripts/pod-lint.sh
+
   build-matrix:
     name: Build ${{ matrix.platform }}
     runs-on: macos-14
