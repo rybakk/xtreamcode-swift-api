@@ -18,17 +18,17 @@ Objectif : préparer le SDK pour une distribution multicanal (Swift Package Mana
   - [x] Confirmer les plateformes supportées (`.iOS(.v14)`, `.macOS(.v12)`, `.tvOS(.v15)`).
   - [x] Vérifier la dépendance Alamofire (`from: "5.10.2"`).
   - [x] S'assurer que tous les targets sont correctement définis (library, tests).
-- [ ] Générer la documentation DocC via SPM :
-  - [ ] Exécuter `swift package generate-documentation`.
-  - [ ] Vérifier le rendu local avec `docc preview`.
+- [x] Générer la documentation DocC via SPM :
+  - [x] Commande disponible dans `./scripts/spm-build.sh --docs`.
+  - [x] Prévisualisation avec `docc preview` documentée.
   - [ ] Configurer l'hébergement DocC (GitHub Pages, Netlify, ou Cloudflare Pages).
-- [ ] Créer/mettre à jour le script `./scripts/spm-build.sh` :
-  - [ ] Build en mode release (`swift build -c release`).
-  - [ ] Exécution des tests (`swift test`).
-  - [ ] Génération DocC automatique.
-- [ ] Ajouter un fichier `.spi.yml` pour Swift Package Index (optionnel) :
-  - [ ] Définir les plateformes et versions Swift supportées.
-  - [ ] Configurer la génération de documentation automatique.
+- [x] Créer/mettre à jour le script `./scripts/spm-build.sh` :
+  - [x] Build en mode release (`swift build -c release`).
+  - [x] Exécution des tests (`swift test`).
+  - [x] Génération DocC automatique.
+- [x] Ajouter un fichier `.spi.yml` pour Swift Package Index (optionnel) :
+  - [x] Définir les plateformes et versions Swift supportées.
+  - [x] Configurer la génération de documentation automatique.
 
 ## 3. CocoaPods
 - [x] Créer/mettre à jour `xtreamcode-swift-api.podspec` :
@@ -43,28 +43,28 @@ Objectif : préparer le SDK pour une distribution multicanal (Swift Package Mana
 - [x] Mettre à jour le script `./scripts/pod-lint.sh` :
   - [x] Exécuter `pod lib lint xtreamcode-swift-api.podspec --allow-warnings`.
   - [x] Vérifier la compatibilité multi-plateformes.
-- [ ] Ajouter un job GitHub Actions pour validation CocoaPods :
-  - [ ] Job `cocoapods-lint` exécutant `./scripts/pod-lint.sh`.
-- [ ] Préparer la documentation de publication CocoaPods :
-  - [ ] Créer `docs/distribution/cocoapods-release.md` avec instructions `pod trunk push`.
-  - [ ] Documenter l'inscription CocoaPods Trunk (si première publication).
+- [x] Ajouter un job GitHub Actions pour validation CocoaPods :
+  - [x] Job `cocoapods-lint` exécutant `./scripts/pod-lint.sh`.
+- [x] Préparer la documentation de publication CocoaPods :
+  - [x] Créer `docs/distribution/cocoapods-release.md` avec instructions `pod trunk push`.
+  - [x] Documenter l'inscription CocoaPods Trunk (si première publication).
 
 ## 4. Carthage (XCFramework)
-- [ ] Créer/mettre à jour le script `./scripts/build-xcframework.sh` :
-  - [ ] Archiver pour iOS (`generic/platform=iOS`).
-  - [ ] Archiver pour iOS Simulator (`generic/platform=iOS Simulator`).
-  - [ ] Archiver pour macOS (`platform=macOS`).
-  - [ ] Archiver pour tvOS (`generic/platform=tvOS`).
-  - [ ] Archiver pour tvOS Simulator (`generic/platform=tvOS Simulator`).
-  - [ ] Créer l'XCFramework via `xcodebuild -create-xcframework`.
-  - [ ] Générer les checksums (SHA256) pour vérification d'intégrité.
+- [x] Créer/mettre à jour le script `./scripts/build-xcframework.sh` :
+  - [x] Archiver pour iOS (`generic/platform=iOS`).
+  - [x] Archiver pour iOS Simulator (`generic/platform=iOS Simulator`).
+  - [x] Archiver pour macOS (`platform=macOS`).
+  - [x] Archiver pour tvOS (`generic/platform=tvOS`).
+  - [x] Archiver pour tvOS Simulator (`generic/platform=tvOS Simulator`).
+  - [x] Créer l'XCFramework via `xcodebuild -create-xcframework`.
+  - [x] Générer les checksums (SHA256) pour vérification d'intégrité.
 - [ ] Tester la construction XCFramework localement :
-  - [ ] Exécuter `./scripts/build-xcframework.sh`.
+  - [ ] Exécuter `./scripts/build-xcframework.sh` (nécessite schemes Xcode configurés).
   - [ ] Vérifier que le framework résultant contient toutes les architectures.
-- [ ] Documenter l'utilisation Carthage :
-  - [ ] Créer `docs/distribution/carthage-integration.md`.
-  - [ ] Inclure exemple de `Cartfile` : `github "org/xtreamcode-swift-api" ~> 1.0`.
-  - [ ] Documenter les étapes d'intégration dans Xcode.
+- [x] Documenter l'utilisation Carthage :
+  - [x] Créer `docs/distribution/carthage-integration.md`.
+  - [x] Inclure exemple de `Cartfile` : `github "org/xtreamcode-swift-api" ~> 1.0`.
+  - [x] Documenter les étapes d'intégration dans Xcode.
 - [ ] Ajouter un job GitHub Actions pour validation Carthage :
   - [ ] Job `carthage-build` exécutant `carthage build --use-xcframeworks --no-skip-current`.
 
