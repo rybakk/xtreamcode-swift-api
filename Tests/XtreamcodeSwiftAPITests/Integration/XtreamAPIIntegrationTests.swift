@@ -1,7 +1,7 @@
 // swiftlint:disable function_body_length
 import XCTest
 import XtreamModels
-@testable import XtreamSDKFacade
+@testable import XtreamcodeSwiftAPI
 @testable import XtreamServices
 
 final class XtreamAPIIntegrationTests: XCTestCase {

@@ -1,6 +1,6 @@
 import XCTest
 import XtreamModels
-@testable import XtreamSDKFacade
+@testable import XtreamcodeSwiftAPI
 
 final class LiveIssueReportTests: XCTestCase {
     private var baseURL: URL {

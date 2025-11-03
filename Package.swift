@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "XtreamcodeSwiftAPI",
-            targets: ["XtreamSDKFacade"]
+            targets: ["XtreamcodeSwiftAPI"]
         ),
     ],
     dependencies: [
@@ -42,7 +42,7 @@ let package = Package(
             path: "Sources/XtreamServices"
         ),
         .target(
-            name: "XtreamSDKFacade",
+            name: "XtreamcodeSwiftAPI",
             dependencies: [
                 "XtreamServices",
                 "XtreamModels",
@@ -52,7 +52,7 @@ let package = Package(
         .testTarget(
             name: "XtreamcodeSwiftAPITests",
             dependencies: [
-                "XtreamSDKFacade",
+                "XtreamcodeSwiftAPI",
                 "XtreamClient",
                 "XtreamModels",
             ],
