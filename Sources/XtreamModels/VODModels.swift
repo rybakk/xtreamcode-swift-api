@@ -123,6 +123,33 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
         case customSID = "custom_sid"
         case directSource = "direct_source"
     }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.num = try container.decodeIfPresent(Int.self, forKey: .num)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.streamType = try container.decodeIfPresent(String.self, forKey: .streamType)
+        self.streamID = try container.decode(Int.self, forKey: .streamID)
+        self.streamIcon = try container.decodeIfPresent(String.self, forKey: .streamIcon)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            self.rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            self.rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            self.rating = String(intValue)
+        } else {
+            self.rating = nil
+        }
+
+        self.rating5Based = try container.decodeIfPresent(Double.self, forKey: .rating5Based)
+        self.added = try container.decodeIfPresent(String.self, forKey: .added)
+        self.categoryID = try container.decodeIfPresent(String.self, forKey: .categoryID)
+        self.containerExtension = try container.decodeIfPresent(String.self, forKey: .containerExtension)
+        self.customSID = try container.decodeIfPresent(String.self, forKey: .customSID)
+        self.directSource = try container.decodeIfPresent(String.self, forKey: .directSource)
+    }
 }
 
 public extension XtreamVODStream {
@@ -270,7 +297,18 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         durationSecs = try container.decodeIfPresent(Int.self, forKey: .durationSecs)
         video = XtreamVODMovieInfo.decodeCodec(from: container, key: .video)
         audio = XtreamVODMovieInfo.decodeCodec(from: container, key: .audio)
-        rating = try container.decodeIfPresent(String.self, forKey: .rating)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            rating = String(intValue)
+        } else {
+            rating = nil
+        }
+
         rating5Based = try container.decodeIfPresent(Double.self, forKey: .rating5Based)
     }
 

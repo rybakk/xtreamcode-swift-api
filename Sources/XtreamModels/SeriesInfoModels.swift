@@ -152,6 +152,47 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         case audio
         case subtitles
     }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.tmdbID = try container.decodeIfPresent(Int.self, forKey: .tmdbID)
+        self.releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate)
+        self.plot = try container.decodeIfPresent(String.self, forKey: .plot)
+        self.durationSecs = try container.decodeIfPresent(Int.self, forKey: .durationSecs)
+        self.duration = try container.decodeIfPresent(String.self, forKey: .duration)
+        self.movieImage = try container.decodeIfPresent(String.self, forKey: .movieImage)
+        self.bitrate = try container.decodeIfPresent(Int.self, forKey: .bitrate)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            self.rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            self.rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            self.rating = String(intValue)
+        } else {
+            self.rating = nil
+        }
+
+        self.season = try container.decodeIfPresent(Int.self, forKey: .season)
+        self.audio = try container.decodeIfPresent([XtreamSeriesInfoAudioTrack].self, forKey: .audio)
+        self.subtitles = try container.decodeIfPresent([XtreamSeriesInfoSubtitle].self, forKey: .subtitles)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(tmdbID, forKey: .tmdbID)
+        try container.encodeIfPresent(releaseDate, forKey: .releaseDate)
+        try container.encodeIfPresent(plot, forKey: .plot)
+        try container.encodeIfPresent(durationSecs, forKey: .durationSecs)
+        try container.encodeIfPresent(duration, forKey: .duration)
+        try container.encodeIfPresent(movieImage, forKey: .movieImage)
+        try container.encodeIfPresent(bitrate, forKey: .bitrate)
+        try container.encodeIfPresent(rating, forKey: .rating)
+        try container.encodeIfPresent(season, forKey: .season)
+        try container.encodeIfPresent(audio, forKey: .audio)
+        try container.encodeIfPresent(subtitles, forKey: .subtitles)
+    }
 }
 
 public struct XtreamSeriesInfoAudioTrack: Codable, Sendable, Equatable, Hashable {
@@ -237,6 +278,53 @@ public struct XtreamSeriesInfoDetail: Codable, Sendable, Equatable {
         case youtubeTrailer = "youtube_trailer"
         case episodeRunTime = "episode_run_time"
         case categoryID = "category_id"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.cover = try container.decodeIfPresent(String.self, forKey: .cover)
+        self.plot = try container.decodeIfPresent(String.self, forKey: .plot)
+        self.cast = try container.decodeIfPresent(String.self, forKey: .cast)
+        self.director = try container.decodeIfPresent(String.self, forKey: .director)
+        self.genre = try container.decodeIfPresent(String.self, forKey: .genre)
+        self.releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate)
+        self.lastModified = try container.decodeIfPresent(String.self, forKey: .lastModified)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            self.rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            self.rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            self.rating = String(intValue)
+        } else {
+            self.rating = nil
+        }
+
+        self.rating5Based = try container.decodeIfPresent(Double.self, forKey: .rating5Based)
+        self.backdropPath = try container.decodeIfPresent([String].self, forKey: .backdropPath)
+        self.youtubeTrailer = try container.decodeIfPresent(String.self, forKey: .youtubeTrailer)
+        self.episodeRunTime = try container.decodeIfPresent(String.self, forKey: .episodeRunTime)
+        self.categoryID = try container.decodeIfPresent(String.self, forKey: .categoryID)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(cover, forKey: .cover)
+        try container.encodeIfPresent(plot, forKey: .plot)
+        try container.encodeIfPresent(cast, forKey: .cast)
+        try container.encodeIfPresent(director, forKey: .director)
+        try container.encodeIfPresent(genre, forKey: .genre)
+        try container.encodeIfPresent(releaseDate, forKey: .releaseDate)
+        try container.encodeIfPresent(lastModified, forKey: .lastModified)
+        try container.encodeIfPresent(rating, forKey: .rating)
+        try container.encodeIfPresent(rating5Based, forKey: .rating5Based)
+        try container.encodeIfPresent(backdropPath, forKey: .backdropPath)
+        try container.encodeIfPresent(youtubeTrailer, forKey: .youtubeTrailer)
+        try container.encodeIfPresent(episodeRunTime, forKey: .episodeRunTime)
+        try container.encodeIfPresent(categoryID, forKey: .categoryID)
     }
 }
 

@@ -149,6 +149,38 @@ public struct XtreamSeriesResponse: Sendable, Decodable {
         case categoryID = "category_id"
     }
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.num = try container.decodeIfPresent(Int.self, forKey: .num)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.streamType = try container.decodeIfPresent(String.self, forKey: .streamType)
+        self.seriesID = try container.decode(Int.self, forKey: .seriesID)
+        self.cover = try container.decodeIfPresent(String.self, forKey: .cover)
+        self.plot = try container.decodeIfPresent(String.self, forKey: .plot)
+        self.cast = try container.decodeIfPresent(String.self, forKey: .cast)
+        self.director = try container.decodeIfPresent(String.self, forKey: .director)
+        self.genre = try container.decodeIfPresent(String.self, forKey: .genre)
+        self.releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate)
+        self.lastModified = try container.decodeIfPresent(String.self, forKey: .lastModified)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            self.rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            self.rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            self.rating = String(intValue)
+        } else {
+            self.rating = nil
+        }
+
+        self.rating5Based = try container.decodeIfPresent(Double.self, forKey: .rating5Based)
+        self.backdropPath = try container.decodeIfPresent(BackdropPathValue.self, forKey: .backdropPath)
+        self.youtubeTrailer = try container.decodeIfPresent(String.self, forKey: .youtubeTrailer)
+        self.episodeRunTime = try container.decodeIfPresent(String.self, forKey: .episodeRunTime)
+        self.categoryID = try container.decodeIfPresent(String.self, forKey: .categoryID)
+    }
+
     public enum BackdropPathValue: Decodable, Sendable {
         case array([String])
         case string(String)

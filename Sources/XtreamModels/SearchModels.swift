@@ -75,7 +75,17 @@ public struct XtreamSearchResultResponse: Sendable, Decodable {
         self.categoryID = try? container.decode(String.self, forKey: .categoryID)
         self.streamIcon = try? container.decode(String.self, forKey: .streamIcon)
         self.cover = try? container.decode(String.self, forKey: .cover)
-        self.rating = try? container.decode(String.self, forKey: .rating)
+
+        // Handle rating - API may return String or numeric value
+        if let stringValue = try? container.decode(String.self, forKey: .rating) {
+            self.rating = stringValue
+        } else if let doubleValue = try? container.decode(Double.self, forKey: .rating) {
+            self.rating = String(doubleValue)
+        } else if let intValue = try? container.decode(Int.self, forKey: .rating) {
+            self.rating = String(intValue)
+        } else {
+            self.rating = nil
+        }
     }
 }
 
