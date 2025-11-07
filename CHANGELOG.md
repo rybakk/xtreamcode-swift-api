@@ -4,6 +4,11 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-11-07
+
+### Fixed
+- Alignement du numéro de version (README, podspec, tag) pour assurer la distribution CocoaPods/SwiftPM de la révision 1.1.1.
+
 ## [1.1.0] - 2025-11-07
 
 ### Added
@@ -80,5 +85,6 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Cache** : Hybride mémoire/disque avec TTL configurables
 - **Documentation** : DocC complète avec guides et exemples
 
+[1.1.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.1
 [1.1.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.0
 [1.0.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.0.0
