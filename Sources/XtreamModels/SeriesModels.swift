@@ -70,6 +70,7 @@ public struct XtreamSeries: Codable, Sendable, Equatable, Hashable {
     public let youtubeTrailer: String?
     public let episodeRunTime: String?
     public let categoryID: String?
+    public let tmdbID: Int?
 
     public init(
         num: Int?,
@@ -88,7 +89,8 @@ public struct XtreamSeries: Codable, Sendable, Equatable, Hashable {
         backdropPath: [String]?,
         youtubeTrailer: String?,
         episodeRunTime: String?,
-        categoryID: String?
+        categoryID: String?,
+        tmdbID: Int?
     ) {
         self.num = num
         self.name = name
@@ -107,6 +109,7 @@ public struct XtreamSeries: Codable, Sendable, Equatable, Hashable {
         self.youtubeTrailer = youtubeTrailer
         self.episodeRunTime = episodeRunTime
         self.categoryID = categoryID
+        self.tmdbID = tmdbID
     }
 }
 
@@ -128,6 +131,7 @@ public struct XtreamSeriesResponse: Sendable, Decodable {
     public let youtubeTrailer: String?
     public let episodeRunTime: String?
     public let categoryID: String?
+    public let tmdbID: Int?
 
     private enum CodingKeys: String, CodingKey {
         case num
@@ -147,6 +151,7 @@ public struct XtreamSeriesResponse: Sendable, Decodable {
         case youtubeTrailer = "youtube_trailer"
         case episodeRunTime = "episode_run_time"
         case categoryID = "category_id"
+        case tmdbID = "tmdb_id"
     }
 
     public init(from decoder: Decoder) throws {
@@ -179,6 +184,7 @@ public struct XtreamSeriesResponse: Sendable, Decodable {
         self.youtubeTrailer = try container.decodeIfPresent(String.self, forKey: .youtubeTrailer)
         self.episodeRunTime = try container.decodeIfPresent(String.self, forKey: .episodeRunTime)
         self.categoryID = try container.decodeIfPresent(String.self, forKey: .categoryID)
+        self.tmdbID = XtreamSeriesResponse.decodeIntLike(container, forKey: .tmdbID)
     }
 
     public enum BackdropPathValue: Decodable, Sendable {
@@ -196,6 +202,20 @@ public struct XtreamSeriesResponse: Sendable, Decodable {
                 self = .empty
             }
         }
+    }
+
+    private static func decodeIntLike(
+        _ container: KeyedDecodingContainer<CodingKeys>,
+        forKey key: CodingKeys
+    ) -> Int? {
+        if let intValue = try? container.decodeIfPresent(Int.self, forKey: key) {
+            return intValue
+        }
+        if let stringValue = try? container.decodeIfPresent(String.self, forKey: key),
+           let intValue = Int(stringValue) {
+            return intValue
+        }
+        return nil
     }
 }
 
@@ -230,7 +250,8 @@ public extension XtreamSeries {
             backdropPath: backdropArray,
             youtubeTrailer: response.youtubeTrailer,
             episodeRunTime: response.episodeRunTime,
-            categoryID: response.categoryID
+            categoryID: response.categoryID,
+            tmdbID: response.tmdbID
         )
     }
 }

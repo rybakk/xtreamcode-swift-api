@@ -65,6 +65,8 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
     public let containerExtension: String?
     public let customSID: String?
     public let directSource: String?
+    public let tmdbID: Int?
+    public let tmdbID: Int?
 
     public init(
         num: Int?,
@@ -78,7 +80,8 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
         categoryID: String?,
         containerExtension: String?,
         customSID: String?,
-        directSource: String?
+        directSource: String?,
+        tmdbID: Int?
     ) {
         self.num = num
         self.name = name
@@ -92,6 +95,7 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
         self.containerExtension = containerExtension
         self.customSID = customSID
         self.directSource = directSource
+        self.tmdbID = tmdbID
     }
 }
 
@@ -122,6 +126,7 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
         case containerExtension = "container_extension"
         case customSID = "custom_sid"
         case directSource = "direct_source"
+        case tmdbID = "tmdb_id"
     }
 
     public init(from decoder: Decoder) throws {
@@ -149,6 +154,21 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
         self.containerExtension = try container.decodeIfPresent(String.self, forKey: .containerExtension)
         self.customSID = try container.decodeIfPresent(String.self, forKey: .customSID)
         self.directSource = try container.decodeIfPresent(String.self, forKey: .directSource)
+        self.tmdbID = XtreamVODStreamResponse.decodeIntLike(container, forKey: .tmdbID)
+    }
+
+    private static func decodeIntLike(
+        _ container: KeyedDecodingContainer<CodingKeys>,
+        forKey key: CodingKeys
+    ) -> Int? {
+        if let intValue = try? container.decodeIfPresent(Int.self, forKey: key) {
+            return intValue
+        }
+        if let stringValue = try? container.decodeIfPresent(String.self, forKey: key),
+           let intValue = Int(stringValue) {
+            return intValue
+        }
+        return nil
     }
 }
 
@@ -166,7 +186,8 @@ public extension XtreamVODStream {
             categoryID: response.categoryID,
             containerExtension: response.containerExtension,
             customSID: response.customSID,
-            directSource: response.directSource
+            directSource: response.directSource,
+            tmdbID: response.tmdbID
         )
     }
 }
