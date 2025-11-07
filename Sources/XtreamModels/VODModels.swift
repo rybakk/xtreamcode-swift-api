@@ -66,7 +66,6 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
     public let customSID: String?
     public let directSource: String?
     public let tmdbID: Int?
-    public let tmdbID: Int?
 
     public init(
         num: Int?,
@@ -112,6 +111,7 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
     public let containerExtension: String?
     public let customSID: String?
     public let directSource: String?
+    public let tmdbID: Int?
 
     private enum CodingKeys: String, CodingKey {
         case num
