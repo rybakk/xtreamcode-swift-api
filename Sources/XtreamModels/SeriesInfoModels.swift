@@ -23,7 +23,9 @@ public struct XtreamSeriesInfoSeason: Codable, Sendable, Equatable, Hashable {
     public let name: String?
     public let overview: String?
     public let seasonNumber: Int?
+    public let cover: String?
     public let coverBig: String?
+    public let voteAverage: Double?
 
     public init(
         airDate: String?,
@@ -32,7 +34,9 @@ public struct XtreamSeriesInfoSeason: Codable, Sendable, Equatable, Hashable {
         name: String?,
         overview: String?,
         seasonNumber: Int?,
-        coverBig: String?
+        cover: String?,
+        coverBig: String?,
+        voteAverage: Double?
     ) {
         self.airDate = airDate
         self.episodeCount = episodeCount
@@ -40,7 +44,9 @@ public struct XtreamSeriesInfoSeason: Codable, Sendable, Equatable, Hashable {
         self.name = name
         self.overview = overview
         self.seasonNumber = seasonNumber
+        self.cover = cover
         self.coverBig = coverBig
+        self.voteAverage = voteAverage
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -50,7 +56,9 @@ public struct XtreamSeriesInfoSeason: Codable, Sendable, Equatable, Hashable {
         case name
         case overview
         case seasonNumber = "season_number"
+        case cover
         case coverBig = "cover_big"
+        case voteAverage = "vote_average"
     }
 }
 
@@ -110,6 +118,7 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
     public let bitrate: Int?
     public let rating: String?
     public let season: Int?
+    public let video: XtreamVODCodecInfo?
     public let audio: [XtreamSeriesInfoAudioTrack]?
     public let subtitles: [XtreamSeriesInfoSubtitle]?
 
@@ -123,6 +132,7 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         bitrate: Int?,
         rating: String?,
         season: Int?,
+        video: XtreamVODCodecInfo?,
         audio: [XtreamSeriesInfoAudioTrack]?,
         subtitles: [XtreamSeriesInfoSubtitle]?
     ) {
@@ -135,6 +145,7 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         self.bitrate = bitrate
         self.rating = rating
         self.season = season
+        self.video = video
         self.audio = audio
         self.subtitles = subtitles
     }
@@ -149,6 +160,7 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         case bitrate
         case rating
         case season
+        case video
         case audio
         case subtitles
     }
@@ -175,8 +187,20 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         }
 
         self.season = try container.decodeIfPresent(Int.self, forKey: .season)
+        self.video = XtreamSeriesInfoEpisodeInfo.decodeCodec(from: container, key: .video)
         self.audio = try container.decodeIfPresent([XtreamSeriesInfoAudioTrack].self, forKey: .audio)
         self.subtitles = try container.decodeIfPresent([XtreamSeriesInfoSubtitle].self, forKey: .subtitles)
+    }
+
+    private static func decodeCodec(
+        from container: KeyedDecodingContainer<CodingKeys>,
+        key: CodingKeys
+    ) -> XtreamVODCodecInfo? {
+        if let codec = try? container.decode(XtreamVODCodecInfo.self, forKey: key) {
+            return codec
+        }
+        _ = try? container.decode(String.self, forKey: key)
+        return nil
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -190,6 +214,7 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
         try container.encodeIfPresent(bitrate, forKey: .bitrate)
         try container.encodeIfPresent(rating, forKey: .rating)
         try container.encodeIfPresent(season, forKey: .season)
+        try container.encodeIfPresent(video, forKey: .video)
         try container.encodeIfPresent(audio, forKey: .audio)
         try container.encodeIfPresent(subtitles, forKey: .subtitles)
     }

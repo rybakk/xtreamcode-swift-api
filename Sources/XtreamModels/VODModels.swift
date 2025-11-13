@@ -61,6 +61,7 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
     public let rating: String?
     public let rating5Based: Double?
     public let added: String?
+    public let isAdult: String?
     public let categoryID: String?
     public let containerExtension: String?
     public let customSID: String?
@@ -76,6 +77,7 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
         rating: String?,
         rating5Based: Double?,
         added: String?,
+        isAdult: String?,
         categoryID: String?,
         containerExtension: String?,
         customSID: String?,
@@ -90,6 +92,7 @@ public struct XtreamVODStream: Codable, Sendable, Equatable, Hashable {
         self.rating = rating
         self.rating5Based = rating5Based
         self.added = added
+        self.isAdult = isAdult
         self.categoryID = categoryID
         self.containerExtension = containerExtension
         self.customSID = customSID
@@ -107,6 +110,7 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
     public let rating: String?
     public let rating5Based: Double?
     public let added: String?
+    public let isAdult: String?
     public let categoryID: String?
     public let containerExtension: String?
     public let customSID: String?
@@ -122,6 +126,7 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
         case rating
         case rating5Based = "rating_5based"
         case added
+        case isAdult = "is_adult"
         case categoryID = "category_id"
         case containerExtension = "container_extension"
         case customSID = "custom_sid"
@@ -150,6 +155,7 @@ public struct XtreamVODStreamResponse: Sendable, Decodable {
 
         self.rating5Based = try container.decodeIfPresent(Double.self, forKey: .rating5Based)
         self.added = try container.decodeIfPresent(String.self, forKey: .added)
+        self.isAdult = try container.decodeIfPresent(String.self, forKey: .isAdult)
         self.categoryID = try container.decodeIfPresent(String.self, forKey: .categoryID)
         self.containerExtension = try container.decodeIfPresent(String.self, forKey: .containerExtension)
         self.customSID = try container.decodeIfPresent(String.self, forKey: .customSID)
@@ -183,6 +189,7 @@ public extension XtreamVODStream {
             rating: response.rating,
             rating5Based: response.rating5Based,
             added: response.added,
+            isAdult: response.isAdult,
             categoryID: response.categoryID,
             containerExtension: response.containerExtension,
             customSID: response.customSID,
@@ -223,11 +230,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
     public let age: String?
     public let country: String?
     public let genre: String?
+    public let backdrop: String?
     public let backdropPath: [String]?
     public let duration: String?
     public let durationSecs: Int?
     public let video: XtreamVODCodecInfo?
     public let audio: XtreamVODCodecInfo?
+    public let bitrate: Int?
     public let rating: String?
     public let rating5Based: Double?
 
@@ -245,11 +254,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         age: String?,
         country: String?,
         genre: String?,
+        backdrop: String?,
         backdropPath: [String]?,
         duration: String?,
         durationSecs: Int?,
         video: XtreamVODCodecInfo?,
         audio: XtreamVODCodecInfo?,
+        bitrate: Int?,
         rating: String?,
         rating5Based: Double?
     ) {
@@ -266,11 +277,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         self.age = age
         self.country = country
         self.genre = genre
+        self.backdrop = backdrop
         self.backdropPath = backdropPath
         self.duration = duration
         self.durationSecs = durationSecs
         self.video = video
         self.audio = audio
+        self.bitrate = bitrate
         self.rating = rating
         self.rating5Based = rating5Based
     }
@@ -289,11 +302,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         case age
         case country
         case genre
+        case backdrop
         case backdropPath = "backdrop_path"
         case duration
         case durationSecs = "duration_secs"
         case video
         case audio
+        case bitrate
         case rating
         case rating5Based = "rating_5based"
     }
@@ -313,11 +328,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         age = try container.decodeIfPresent(String.self, forKey: .age)
         country = try container.decodeIfPresent(String.self, forKey: .country)
         genre = try container.decodeIfPresent(String.self, forKey: .genre)
+        backdrop = try container.decodeIfPresent(String.self, forKey: .backdrop)
         backdropPath = try container.decodeIfPresent([String].self, forKey: .backdropPath)
         duration = try container.decodeIfPresent(String.self, forKey: .duration)
         durationSecs = try container.decodeIfPresent(Int.self, forKey: .durationSecs)
         video = XtreamVODMovieInfo.decodeCodec(from: container, key: .video)
         audio = XtreamVODMovieInfo.decodeCodec(from: container, key: .audio)
+        bitrate = try container.decodeIfPresent(Int.self, forKey: .bitrate)
 
         // Handle rating - API may return String or numeric value
         if let stringValue = try? container.decode(String.self, forKey: .rating) {
@@ -348,11 +365,13 @@ public struct XtreamVODMovieInfo: Codable, Sendable, Equatable {
         try container.encodeIfPresent(age, forKey: .age)
         try container.encodeIfPresent(country, forKey: .country)
         try container.encodeIfPresent(genre, forKey: .genre)
+        try container.encodeIfPresent(backdrop, forKey: .backdrop)
         try container.encodeIfPresent(backdropPath, forKey: .backdropPath)
         try container.encodeIfPresent(duration, forKey: .duration)
         try container.encodeIfPresent(durationSecs, forKey: .durationSecs)
         try container.encodeIfPresent(video, forKey: .video)
         try container.encodeIfPresent(audio, forKey: .audio)
+        try container.encodeIfPresent(bitrate, forKey: .bitrate)
         try container.encodeIfPresent(rating, forKey: .rating)
         try container.encodeIfPresent(rating5Based, forKey: .rating5Based)
     }
@@ -412,7 +431,7 @@ public extension XtreamVODInfo {
     typealias MovieData = XtreamVODMovieData
 }
 
-public struct XtreamVODCodecInfo: Codable, Sendable, Equatable {
+public struct XtreamVODCodecInfo: Codable, Sendable, Equatable, Hashable {
     public let index: Int?
     public let codecName: String?
     public let codecLongName: String?

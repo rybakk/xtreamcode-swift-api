@@ -38,6 +38,8 @@ public struct XtreamLiveStream: Codable, Sendable, Equatable {
     public let epgChannelID: String?
     public let addedAt: Date?
     public let customSID: String?
+    public let isAdult: Bool
+    public let directSource: String?
     public let hasCatchup: Bool
     public let catchupDurationHours: Int?
 
@@ -51,6 +53,8 @@ public struct XtreamLiveStream: Codable, Sendable, Equatable {
         epgChannelID: String?,
         addedAt: Date?,
         customSID: String?,
+        isAdult: Bool,
+        directSource: String?,
         hasCatchup: Bool,
         catchupDurationHours: Int?
     ) {
@@ -63,6 +67,8 @@ public struct XtreamLiveStream: Codable, Sendable, Equatable {
         self.epgChannelID = epgChannelID
         self.addedAt = addedAt
         self.customSID = customSID
+        self.isAdult = isAdult
+        self.directSource = directSource
         self.hasCatchup = hasCatchup
         self.catchupDurationHours = catchupDurationHours
     }
@@ -78,6 +84,8 @@ public struct XtreamLiveStreamResponse: Sendable, Decodable {
     public let added: String?
     public let categoryID: String
     public let customSID: String?
+    public let isAdult: String?
+    public let directSource: String?
     public let tvArchive: String?
     public let tvArchiveDuration: String?
 
@@ -91,6 +99,8 @@ public struct XtreamLiveStreamResponse: Sendable, Decodable {
         case added
         case categoryID = "category_id"
         case customSID = "custom_sid"
+        case isAdult = "is_adult"
+        case directSource = "direct_source"
         case tvArchive = "tv_archive"
         case tvArchiveDuration = "tv_archive_duration"
     }
@@ -110,6 +120,8 @@ public struct XtreamLiveStreamResponse: Sendable, Decodable {
         self.added = try? container.decode(String.self, forKey: .added)
         self.categoryID = try container.decode(String.self, forKey: .categoryID)
         self.customSID = try? container.decode(String.self, forKey: .customSID)
+        self.isAdult = try? container.decode(String.self, forKey: .isAdult)
+        self.directSource = try? container.decode(String.self, forKey: .directSource)
         if let archiveInt = try? container.decode(Int.self, forKey: .tvArchive) {
             self.tvArchive = String(archiveInt)
         } else {
@@ -138,6 +150,8 @@ public extension XtreamLiveStream {
             epgChannelID: response.epgChannelID,
             addedAt: XtreamMapping.date(from: response.added),
             customSID: response.customSID,
+            isAdult: XtreamMapping.bool(from: response.isAdult, truthyValues: ["1", "true", "TRUE"]),
+            directSource: response.directSource,
             hasCatchup: XtreamMapping.bool(from: response.tvArchive, truthyValues: ["1", "true", "TRUE"]),
             catchupDurationHours: durationValue == 0 ? nil : durationValue
         )
