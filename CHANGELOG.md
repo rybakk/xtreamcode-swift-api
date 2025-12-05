@@ -4,6 +4,11 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-12-06
+
+### Fixed
+- Alignement distribution : README (SwiftPM), podspec et Cartfile pointent désormais vers la release 1.2.1 pour garantir la résolution SPM/CocoaPods/Carthage.
+
 ## [1.1.3] - 2025-12-05
 
 ### Fixed
@@ -97,6 +102,7 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Documentation** : DocC complète avec guides et exemples
 
 [1.1.3]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.3
+[1.2.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.1
 [1.1.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.1
 [1.1.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.0
 [1.0.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.0.0
