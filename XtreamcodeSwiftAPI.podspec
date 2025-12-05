@@ -13,12 +13,12 @@ A comprehensive Swift SDK for Xtream Codes IPTV platforms featuring:
 • Modern async/await API with Combine and closure adapters
 • Full support for iOS, macOS, and tvOS platforms
 DESC
-  s.homepage          = "https://github.com/your-org/xtreamcode-swift-api"
+  s.homepage          = "https://github.com/rybakk/xtreamcode-swift-api"
   s.license           = { :type => "MIT", :file => "LICENSE" }
   s.author            = { "Xtreamcode Swift API Contributors" => "noreply@example.com" }
-  s.source            = { :git => "https://github.com/your-org/xtreamcode-swift-api.git", :tag => "v#{s.version}" }
+  s.source            = { :git => "https://github.com/rybakk/xtreamcode-swift-api.git", :tag => "v#{s.version}" }
   s.swift_versions    = ["5.10", "6.0"]
-  s.documentation_url = "https://your-org.github.io/xtreamcode-swift-api/"
+  s.documentation_url = "https://rybakk.github.io/xtreamcode-swift-api/"
 
   s.ios.deployment_target  = "14.0"
   s.osx.deployment_target  = "12.0"
