@@ -14,6 +14,39 @@ public struct XtreamSeriesInfo: Codable, Sendable, Equatable {
         self.info = info
         self.episodes = episodes
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case seasons, info, episodes
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.seasons = try container.decodeIfPresent([XtreamSeriesInfoSeason].self, forKey: .seasons)
+        self.info = try container.decodeIfPresent(XtreamSeriesInfoDetail.self, forKey: .info)
+
+        // Handle episodes: can be either dictionary or array depending on provider
+        if let episodesDict = try? container.decode([String: [XtreamSeriesInfoEpisode]].self, forKey: .episodes) {
+            // Dictionary format: { "1": [...], "2": [...] }
+            self.episodes = episodesDict
+        } else if let episodesArray = try? container.decode([XtreamSeriesInfoEpisode].self, forKey: .episodes) {
+            // Array format: [...] - group by season number
+            var grouped: [String: [XtreamSeriesInfoEpisode]] = [:]
+            for episode in episodesArray {
+                let seasonKey = String(episode.season ?? 1)
+                grouped[seasonKey, default: []].append(episode)
+            }
+            self.episodes = grouped.isEmpty ? nil : grouped
+        } else {
+            self.episodes = nil
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(seasons, forKey: .seasons)
+        try container.encodeIfPresent(info, forKey: .info)
+        try container.encodeIfPresent(episodes, forKey: .episodes)
+    }
 }
 
 public struct XtreamSeriesInfoSeason: Codable, Sendable, Equatable, Hashable {

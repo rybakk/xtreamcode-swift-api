@@ -4,6 +4,17 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-12-05
+
+### Fixed
+- `XtreamSeriesInfo.episodes` supporte désormais les deux formats de réponse API :
+  - Format dictionnaire : `{ "1": [...], "2": [...] }` (format standard)
+  - Format tableau : `[...]` (certains providers) - les épisodes sont automatiquement groupés par numéro de saison
+
+### Added
+- Nouveau test `testFetchSeriesDetailsHandlesArrayEpisodesFormat` pour valider le parsing du format tableau
+- Nouvelle fixture de test `series_info_array_episodes_sample.json`
+
 ## [1.1.1] - 2025-11-07
 
 ### Fixed
@@ -85,6 +96,7 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Cache** : Hybride mémoire/disque avec TTL configurables
 - **Documentation** : DocC complète avec guides et exemples
 
+[1.1.3]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.3
 [1.1.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.1
 [1.1.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.0
 [1.0.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.0.0

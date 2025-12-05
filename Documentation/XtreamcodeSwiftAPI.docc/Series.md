@@ -32,6 +32,13 @@ Les catégories/séries utilisent les mêmes TTL que le live (`categoriesTTL`, `
 let info = try await api.seriesDetails(for: 500)
 print("Saisons:", info.seasons?.count ?? 0)
 
+// Accéder aux épisodes par saison
+if let season1Episodes = info.episodes?["1"] {
+    for episode in season1Episodes {
+        print("S01E\(episode.episodeNum ?? 0): \(episode.title ?? "")")
+    }
+}
+
 let episodeURL = try await api.seriesEpisodeURL(
     for: 500,
     season: 1,
@@ -40,7 +47,11 @@ let episodeURL = try await api.seriesEpisodeURL(
 print("Lecture:", episodeURL)
 ```
 
-L’URL est construite suivant le format Xtream Codes `series/{user}/{password}/{series_id}/{season}/{episode}.{ext}` (ou `direct_source` si fourni). En cas d’erreur, ``XtreamError/episodeNotFound(seriesID:season:episode:)`` est levé.
+L'URL est construite suivant le format Xtream Codes `series/{user}/{password}/{series_id}/{season}/{episode}.{ext}` (ou `direct_source` si fourni). En cas d'erreur, ``XtreamError/episodeNotFound(seriesID:season:episode:)`` est levé.
+
+> **Note**: Le SDK gère automatiquement les deux formats de réponse API pour les épisodes :
+> - Format dictionnaire : `{ "1": [...], "2": [...] }` (format standard Xtream)
+> - Format tableau : `[...]` (certains providers) - les épisodes sont groupés automatiquement par leur champ `season`
 
 ## Force refresh & offline fallback
 

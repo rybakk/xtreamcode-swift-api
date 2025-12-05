@@ -146,6 +146,38 @@ final class XtreamVODSeriesServiceTests: XCTestCase {
         XCTAssertEqual(pilot.containerExtension, "mp4")
     }
 
+    func testFetchSeriesDetailsHandlesArrayEpisodesFormat() async throws {
+        // Some providers return episodes as an array instead of a dictionary keyed by season
+        let payload = try TestFixtures.data(named: "series_info_array_episodes_sample")
+        let stub = StubURLProtocol.Stub.playerAPI(
+            baseURL: baseURL,
+            action: "get_series_info",
+            data: payload,
+            componentsMatcher: { components in
+                components.queryItems?.first(where: { $0.name == "series_id" })?.value == "501"
+            }
+        )
+
+        let client = await TestClientFactory.makeClient(stubs: [stub], baseURL: baseURL)
+        let service = XtreamSeriesService(client: client)
+
+        let info = try await service.fetchDetails(credentials: credentials, seriesID: 501)
+
+        // Verify seasons parsed correctly
+        XCTAssertEqual(info.seasons?.count, 2)
+
+        // Verify episodes were grouped by season from the array format
+        let episodesSeason1 = try XCTUnwrap(info.episodes?["1"])
+        XCTAssertEqual(episodesSeason1.count, 2) // 2 episodes in season 1
+        XCTAssertEqual(episodesSeason1.first?.episodeNum, 1)
+        XCTAssertEqual(episodesSeason1.first?.title, "Winter Is Coming")
+
+        let episodesSeason2 = try XCTUnwrap(info.episodes?["2"])
+        XCTAssertEqual(episodesSeason2.count, 1) // 1 episode in season 2
+        XCTAssertEqual(episodesSeason2.first?.episodeNum, 1)
+        XCTAssertEqual(episodesSeason2.first?.title, "The North Remembers")
+    }
+
     func testFetchSeriesEpisodeURLBuildsPlaybackURL() async throws {
         let payload = try TestFixtures.data(named: "series_info_full_sample")
         let stub = StubURLProtocol.Stub.playerAPI(
