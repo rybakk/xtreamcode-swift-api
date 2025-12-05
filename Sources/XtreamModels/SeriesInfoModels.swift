@@ -25,19 +25,26 @@ public struct XtreamSeriesInfo: Codable, Sendable, Equatable {
         self.info = try container.decodeIfPresent(XtreamSeriesInfoDetail.self, forKey: .info)
 
         // Handle episodes: can be either dictionary or array depending on provider
-        if let episodesDict = try? container.decode([String: [XtreamSeriesInfoEpisode]].self, forKey: .episodes) {
-            // Dictionary format: { "1": [...], "2": [...] }
+        do {
+            let episodesDict = try container.decode([String: [XtreamSeriesInfoEpisode]].self, forKey: .episodes)
             self.episodes = episodesDict
-        } else if let episodesArray = try? container.decode([XtreamSeriesInfoEpisode].self, forKey: .episodes) {
-            // Array format: [...] - group by season number
-            var grouped: [String: [XtreamSeriesInfoEpisode]] = [:]
-            for episode in episodesArray {
-                let seasonKey = String(episode.season ?? 1)
-                grouped[seasonKey, default: []].append(episode)
+        } catch {
+            // Dictionary format failed, try array format
+            do {
+                let episodesArray = try container.decode([XtreamSeriesInfoEpisode].self, forKey: .episodes)
+                var grouped: [String: [XtreamSeriesInfoEpisode]] = [:]
+                for episode in episodesArray {
+                    let seasonKey = String(episode.season ?? 1)
+                    grouped[seasonKey, default: []].append(episode)
+                }
+                self.episodes = grouped.isEmpty ? nil : grouped
+            } catch let arrayError {
+                // Both formats failed - log the error for debugging
+                print("[XtreamSeriesInfo] Episodes decoding failed:")
+                print("  Dictionary error: \(error)")
+                print("  Array error: \(arrayError)")
+                self.episodes = nil
             }
-            self.episodes = grouped.isEmpty ? nil : grouped
-        } else {
-            self.episodes = nil
         }
     }
 
@@ -221,8 +228,24 @@ public struct XtreamSeriesInfoEpisodeInfo: Codable, Sendable, Equatable, Hashabl
 
         self.season = try container.decodeIfPresent(Int.self, forKey: .season)
         self.video = XtreamSeriesInfoEpisodeInfo.decodeCodec(from: container, key: .video)
-        self.audio = try container.decodeIfPresent([XtreamSeriesInfoAudioTrack].self, forKey: .audio)
-        self.subtitles = try container.decodeIfPresent([XtreamSeriesInfoSubtitle].self, forKey: .subtitles)
+
+        // Handle audio - API may return array or dictionary
+        if let audioArray = try? container.decode([XtreamSeriesInfoAudioTrack].self, forKey: .audio) {
+            self.audio = audioArray
+        } else if let audioDict = try? container.decode([String: XtreamSeriesInfoAudioTrack].self, forKey: .audio) {
+            self.audio = Array(audioDict.values)
+        } else {
+            self.audio = nil
+        }
+
+        // Handle subtitles - API may return array or dictionary
+        if let subtitlesArray = try? container.decode([XtreamSeriesInfoSubtitle].self, forKey: .subtitles) {
+            self.subtitles = subtitlesArray
+        } else if let subtitlesDict = try? container.decode([String: XtreamSeriesInfoSubtitle].self, forKey: .subtitles) {
+            self.subtitles = Array(subtitlesDict.values)
+        } else {
+            self.subtitles = nil
+        }
     }
 
     private static func decodeCodec(
