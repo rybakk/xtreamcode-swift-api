@@ -1,5 +1,9 @@
+#if canImport(XtreamClient)
 import XtreamClient
+#endif
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
 
 public protocol XtreamAccountServicing {
     func fetchAccountDetails(credentials: XtreamCredentials) async throws -> XtreamAccountDetails

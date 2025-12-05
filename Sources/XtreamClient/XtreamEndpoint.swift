@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
 
 public struct XtreamEndpoint: Sendable {
     public enum Method: String, Sendable {

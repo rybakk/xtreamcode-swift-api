@@ -1,6 +1,8 @@
 import Alamofire
 import Foundation
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
 
 public final class XtreamClient {
     public struct Configuration {

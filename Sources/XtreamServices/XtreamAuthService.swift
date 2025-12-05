@@ -1,6 +1,10 @@
 import Foundation
+#if canImport(XtreamClient)
 import XtreamClient
+#endif
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
 
 public protocol XtreamAuthServicing {
     func login(credentials: XtreamCredentials) async throws -> XtreamAuthSession

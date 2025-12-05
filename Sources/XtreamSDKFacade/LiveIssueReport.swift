@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(XtreamServices)
 import XtreamServices
+#endif
 
 public enum MediaIssueDomain: String, Codable, Sendable {
     case live

@@ -2,9 +2,15 @@
 // swiftlint:disable file_length
 import Alamofire
 import Foundation
+#if canImport(XtreamClient)
 import XtreamClient
+#endif
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
+#if canImport(XtreamServices)
 import XtreamServices
+#endif
 #if canImport(Combine)
     import Combine
 #endif

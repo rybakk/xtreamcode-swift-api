@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(XtreamClient)
 import XtreamClient
+#endif
 
 public enum XtreamError: Error, Sendable {
     case network(underlying: Error)

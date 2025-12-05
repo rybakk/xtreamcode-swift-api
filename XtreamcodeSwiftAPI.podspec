@@ -13,24 +13,20 @@ A comprehensive Swift SDK for Xtream Codes IPTV platforms featuring:
 • Modern async/await API with Combine and closure adapters
 • Full support for iOS, macOS, and tvOS platforms
 DESC
-  s.homepage         = "https://github.com/your-org/xtreamcode-swift-api"
-  s.license          = { :type => "MIT", :file => "LICENSE" }
-  s.author           = { "Xtreamcode Swift API Contributors" => "noreply@example.com" }
-  s.source           = { :git => "https://github.com/your-org/xtreamcode-swift-api.git", :tag => "v#{s.version}" }
-  s.swift_versions   = ["5.10", "6.0"]
+  s.homepage          = "https://github.com/your-org/xtreamcode-swift-api"
+  s.license           = { :type => "MIT", :file => "LICENSE" }
+  s.author            = { "Xtreamcode Swift API Contributors" => "noreply@example.com" }
+  s.source            = { :git => "https://github.com/your-org/xtreamcode-swift-api.git", :tag => "v#{s.version}" }
+  s.swift_versions    = ["5.10", "6.0"]
   s.documentation_url = "https://your-org.github.io/xtreamcode-swift-api/"
 
   s.ios.deployment_target  = "14.0"
   s.osx.deployment_target  = "12.0"
   s.tvos.deployment_target = "15.0"
 
-  s.source_files     = "Sources/**/*.swift"
-  s.requires_arc     = true
-
   s.dependency "Alamofire", "~> 5.10"
 
-  s.frameworks = "Foundation"
-  s.ios.frameworks = "UIKit"
-  s.tvos.frameworks = "UIKit"
-  s.osx.frameworks = "AppKit"
+  # Single target with module aliases so the existing imports (`XtreamModels`, `XtreamClient`, `XtreamServices`)
+  # resolve to the unified CocoaPods module (`XtreamcodeSwiftAPI`).
+  s.source_files = "Sources/**/*.swift"
 end

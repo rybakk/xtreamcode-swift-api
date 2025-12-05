@@ -1,6 +1,10 @@
 import Foundation
+#if canImport(XtreamClient)
 import XtreamClient
+#endif
+#if canImport(XtreamModels)
 import XtreamModels
+#endif
 
 public protocol XtreamLiveServicing {
     func fetchCategories(credentials: XtreamCredentials) async throws -> [XtreamLiveCategory]
