@@ -13,7 +13,7 @@ Le projet se structure comme une suite de modules (`XtreamModels`, `XtreamClient
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/<org>/xtreamcode-swift-api.git", from: "1.2.1")
+    .package(url: "https://github.com/<org>/xtreamcode-swift-api.git", from: "1.2.2")
 ]
 ```
 

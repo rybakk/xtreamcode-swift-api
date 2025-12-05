@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "XtreamcodeSwiftAPI"
-  s.version          = "1.2.1"
+  s.version          = "1.2.2"
   s.summary          = "Modern Swift SDK for Xtream Codes IPTV platforms"
   s.description      = <<-DESC
 A comprehensive Swift SDK for Xtream Codes IPTV platforms featuring:

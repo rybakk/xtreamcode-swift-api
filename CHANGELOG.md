@@ -4,6 +4,12 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2025-12-05
+
+### Fixed
+- Refactored episodes decoding to use explicit do-catch for better error logging when parsing fails
+- Handle audio and subtitles fields in series episode info that may return as array or dictionary from API
+
 ## [1.2.1] - 2025-12-06
 
 ### Fixed
@@ -101,8 +107,9 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Cache** : Hybride mémoire/disque avec TTL configurables
 - **Documentation** : DocC complète avec guides et exemples
 
-[1.1.3]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.3
+[1.2.2]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.2
 [1.2.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.1
+[1.1.3]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.3
 [1.1.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.1
 [1.1.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.1.0
 [1.0.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.0.0
