@@ -161,6 +161,15 @@ public extension XtreamEndpoint {
         return playerAPI(action: "get_tv_archive", additionalQueryItems: items)
     }
 
+    static func xmltvEPG() -> XtreamEndpoint {
+        XtreamEndpoint(
+            path: "xmltv.php",
+            method: .get,
+            queryItems: [],
+            requiresCredentials: true
+        )
+    }
+
     // MARK: - VOD Endpoints
 
     static func vodCategories() -> XtreamEndpoint {

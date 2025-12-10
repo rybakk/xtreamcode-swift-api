@@ -622,6 +622,13 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
         }
     }
 
+    /// Fetches the full EPG in XMLTV format.
+    /// - Returns: Raw XML data that can be parsed using an XML parser.
+    public func xmltvEPG() async throws -> Data {
+        let credentials = credentialsSnapshot()
+        return try await epgService.fetchXMLTVEPG(credentials: credentials)
+    }
+
     // MARK: - VOD
 
     public func vodCategories(forceRefresh: Bool = false) async throws -> [XtreamVODCategory] {
@@ -1076,6 +1083,26 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
     }
 
     @discardableResult
+    public func xmltvEPG(
+        completion: @escaping (Result<Data, Error>) -> Void
+    ) -> Task<Void, Never> {
+        let dispatcher = ResultDispatcher(completion)
+
+        return Task { [weak self] in
+            guard let self else {
+                dispatcher.resolve(.failure(XtreamError.unknown(underlying: CancellationError())))
+                return
+            }
+            do {
+                let value = try await xmltvEPG()
+                dispatcher.resolve(.success(value))
+            } catch {
+                dispatcher.resolve(.failure(error))
+            }
+        }
+    }
+
+    @discardableResult
     public func vodCategories(
         forceRefresh: Bool = false,
         completion: @escaping (Result<[XtreamVODCategory], Error>) -> Void
@@ -1331,6 +1358,12 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
         ) -> AnyPublisher<XtreamCatchupCollection?, Error> {
             publisher { api in
                 try await api.catchup(for: streamID, start: start, forceRefresh: forceRefresh)
+            }
+        }
+
+        func xmltvEPGPublisher() -> AnyPublisher<Data, Error> {
+            publisher { api in
+                try await api.xmltvEPG()
             }
         }
 

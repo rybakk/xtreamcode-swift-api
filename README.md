@@ -13,7 +13,7 @@ Le projet se structure comme une suite de modules (`XtreamModels`, `XtreamClient
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/<org>/xtreamcode-swift-api.git", from: "1.2.2")
+    .package(url: "https://github.com/<org>/xtreamcode-swift-api.git", from: "1.3.0")
 ]
 ```
 
@@ -75,6 +75,28 @@ Task {
 ```
 
 Les cas d'erreurs typiques sont exposés via `XtreamAuthError` (`invalidCredentials`, `accountExpired`, `tooManyConnections`, etc.). Pour la partie live/EPG, reportez-vous à `XtreamError.liveUnavailable`, `XtreamError.epgUnavailable`, `XtreamError.catchupDisabled`.
+
+### Exemple EPG complet (XMLTV)
+
+```swift
+Task {
+    do {
+        // Récupérer l'EPG complet au format XMLTV
+        let xmlData = try await api.xmltvEPG()
+
+        // Parser le XML avec XMLParser ou une bibliothèque de votre choix
+        let parser = XMLParser(data: xmlData)
+        // ... configuration du parser
+
+        // Ou sauvegarder pour usage ultérieur
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("epg.xml")
+        try xmlData.write(to: url)
+        print("EPG sauvegardé: \(url.path)")
+    } catch {
+        print("Erreur XMLTV: \(error)")
+    }
+}
+```
 
 ### Exemple VOD & Séries
 

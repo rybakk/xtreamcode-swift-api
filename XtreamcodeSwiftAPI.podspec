@@ -1,11 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = "XtreamcodeSwiftAPI"
-  s.version          = "1.2.2"
+  s.version          = "1.3.0"
   s.summary          = "Modern Swift SDK for Xtream Codes IPTV platforms"
   s.description      = <<-DESC
 A comprehensive Swift SDK for Xtream Codes IPTV platforms featuring:
 • Complete authentication and account management
 • Live TV streaming with EPG and catch-up support
+• Full XMLTV EPG export for external parsing
 • VOD (Video on Demand) catalog with detailed metadata
 • Series/TV shows with seasons and episodes
 • Unified search across all content types

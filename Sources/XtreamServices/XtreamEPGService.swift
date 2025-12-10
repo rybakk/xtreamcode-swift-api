@@ -25,6 +25,10 @@ public protocol XtreamEPGServicing {
         streamID: Int,
         start: Date?
     ) async throws -> XtreamCatchupCollection?
+
+    func fetchXMLTVEPG(
+        credentials: XtreamCredentials
+    ) async throws -> Data
 }
 
 public final class XtreamEPGService: XtreamEPGServicing {
@@ -206,6 +210,25 @@ public final class XtreamEPGService: XtreamEPGServicing {
         } catch {
             logger?.error(error, context: LiveContext(endpoint: "get_tv_archive", streamID: streamID))
             throw mapCatchupError(error)
+        }
+    }
+
+    public func fetchXMLTVEPG(
+        credentials: XtreamCredentials
+    ) async throws -> Data {
+        let endpoint = XtreamEndpoint.xmltvEPG()
+
+        do {
+            logger?.event(.requestStarted(endpoint: "xmltv"))
+            let startDate = Date()
+
+            let data: Data = try await client.data(for: endpoint, credentials: credentials)
+
+            logger?.event(.requestSucceeded(endpoint: "xmltv", duration: Date().timeIntervalSince(startDate)))
+            return data
+        } catch {
+            logger?.error(error, context: LiveContext(endpoint: "xmltv", streamID: nil))
+            throw mapEPGError(error)
         }
     }
 
