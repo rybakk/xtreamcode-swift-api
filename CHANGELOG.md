@@ -4,6 +4,12 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2025-12-12
+
+### Fixed
+- Les sous-modules (`XtreamModels`, `XtreamServices`, `XtreamClient`) sont maintenant correctement réexportés via `@_exported import`
+- Les consommateurs du package peuvent accéder à tous les types publics avec un seul `import XtreamcodeSwiftAPI`
+
 ## [1.3.0] - 2025-12-10
 
 ### Added
@@ -115,6 +121,7 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Cache** : Hybride mémoire/disque avec TTL configurables
 - **Documentation** : DocC complète avec guides et exemples
 
+[1.3.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.1
 [1.3.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.0
 [1.2.2]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.2
 [1.2.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.1

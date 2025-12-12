@@ -3,13 +3,13 @@
 import Alamofire
 import Foundation
 #if canImport(XtreamClient)
-import XtreamClient
+@_exported import XtreamClient
 #endif
 #if canImport(XtreamModels)
-import XtreamModels
+@_exported import XtreamModels
 #endif
 #if canImport(XtreamServices)
-import XtreamServices
+@_exported import XtreamServices
 #endif
 #if canImport(Combine)
     import Combine
