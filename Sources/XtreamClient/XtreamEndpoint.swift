@@ -161,6 +161,13 @@ public extension XtreamEndpoint {
         return playerAPI(action: "get_tv_archive", additionalQueryItems: items)
     }
 
+    static func simpleDataTable(streamID: Int) -> XtreamEndpoint {
+        playerAPI(
+            action: "get_simple_data_table",
+            additionalQueryItems: [URLQueryItem(name: "stream_id", value: String(streamID))]
+        )
+    }
+
     static func xmltvEPG() -> XtreamEndpoint {
         XtreamEndpoint(
             path: "xmltv.php",

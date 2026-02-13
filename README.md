@@ -13,7 +13,7 @@ Le projet se structure comme une suite de modules (`XtreamModels`, `XtreamClient
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/<org>/xtreamcode-swift-api.git", from: "1.3.0")
+    .package(url: "https://github.com/rybakk/xtreamcode-swift-api.git", from: "1.3.0")
 ]
 ```
 
@@ -94,6 +94,25 @@ Task {
         print("EPG sauvegardé: \(url.path)")
     } catch {
         print("Erreur XMLTV: \(error)")
+    }
+}
+```
+
+### Exemple Catch-Up simplifié (Simple Data Table)
+
+```swift
+Task {
+    do {
+        // Récupérer les données catch-up simplifiées (titre, heure, durée)
+        if let catchupData = try await api.simpleDataTable(for: streamID) {
+            print("Flux : \(catchupData.streamName ?? "N/A")")
+            print("Segments disponibles : \(catchupData.segments.count)")
+            for segment in catchupData.segments {
+                print("  - \(segment.title) (\(segment.duration ?? 0)s)")
+            }
+        }
+    } catch {
+        print("Erreur catch-up : \(error)")
     }
 }
 ```

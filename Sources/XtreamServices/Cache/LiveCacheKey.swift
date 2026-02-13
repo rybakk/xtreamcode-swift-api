@@ -55,6 +55,10 @@ public struct LiveCacheKey: Hashable, Sendable, CustomStringConvertible {
         return LiveCacheKey(components: ["catchup", username, String(streamID), startComponent])
     }
 
+    public static func simpleDataTable(username: String, streamID: Int) -> LiveCacheKey {
+        LiveCacheKey(components: ["catchup", "simpleDataTable", username, String(streamID)])
+    }
+
     public static func vodCategories(username: String) -> LiveCacheKey {
         LiveCacheKey(components: ["vod", "categories", username])
     }

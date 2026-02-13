@@ -622,6 +622,37 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
         }
     }
 
+    public func simpleDataTable(
+        for streamID: Int,
+        forceRefresh: Bool = false
+    ) async throws -> XtreamCatchupCollection? {
+        let credentials = credentialsSnapshot()
+        let cacheKey = LiveCacheKey.simpleDataTable(username: credentials.username, streamID: streamID)
+        let fallback: XtreamCatchupCollection? = forceRefresh
+            ? await cachedValue(for: cacheKey, ignoringExpiry: true)
+            : nil
+
+        if forceRefresh {
+            await diagnosticsTracker.recordForceRefresh(for: cacheKey)
+            await invalidateLiveCache(for: cacheKey)
+        }
+
+        do {
+            return try await epgService.fetchSimpleDataTable(
+                credentials: credentials,
+                streamID: streamID
+            )
+        } catch {
+            if forceRefresh, let fallback, isOfflineError(error) {
+                logger.event(.offlineFallback(key: cacheKey))
+                await diagnosticsTracker.recordOfflineFallback(for: cacheKey)
+                await restoreFallback(fallback, for: cacheKey)
+                return fallback
+            }
+            throw error
+        }
+    }
+
     /// Fetches the full EPG in XMLTV format.
     /// - Returns: Raw XML data that can be parsed using an XML parser.
     public func xmltvEPG() async throws -> Data {
@@ -1083,6 +1114,28 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
     }
 
     @discardableResult
+    public func simpleDataTable(
+        for streamID: Int,
+        forceRefresh: Bool = false,
+        completion: @escaping (Result<XtreamCatchupCollection?, Error>) -> Void
+    ) -> Task<Void, Never> {
+        let dispatcher = ResultDispatcher(completion)
+
+        return Task { [weak self] in
+            guard let self else {
+                dispatcher.resolve(.failure(XtreamError.unknown(underlying: CancellationError())))
+                return
+            }
+            do {
+                let value = try await simpleDataTable(for: streamID, forceRefresh: forceRefresh)
+                dispatcher.resolve(.success(value))
+            } catch {
+                dispatcher.resolve(.failure(error))
+            }
+        }
+    }
+
+    @discardableResult
     public func xmltvEPG(
         completion: @escaping (Result<Data, Error>) -> Void
     ) -> Task<Void, Never> {
@@ -1358,6 +1411,15 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
         ) -> AnyPublisher<XtreamCatchupCollection?, Error> {
             publisher { api in
                 try await api.catchup(for: streamID, start: start, forceRefresh: forceRefresh)
+            }
+        }
+
+        func simpleDataTablePublisher(
+            for streamID: Int,
+            forceRefresh: Bool = false
+        ) -> AnyPublisher<XtreamCatchupCollection?, Error> {
+            publisher { api in
+                try await api.simpleDataTable(for: streamID, forceRefresh: forceRefresh)
             }
         }
 

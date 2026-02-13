@@ -26,6 +26,11 @@ public protocol XtreamEPGServicing {
         start: Date?
     ) async throws -> XtreamCatchupCollection?
 
+    func fetchSimpleDataTable(
+        credentials: XtreamCredentials,
+        streamID: Int
+    ) async throws -> XtreamCatchupCollection?
+
     func fetchXMLTVEPG(
         credentials: XtreamCredentials
     ) async throws -> Data
@@ -209,6 +214,57 @@ public final class XtreamEPGService: XtreamEPGServicing {
             return collection
         } catch {
             logger?.error(error, context: LiveContext(endpoint: "get_tv_archive", streamID: streamID))
+            throw mapCatchupError(error)
+        }
+    }
+
+    public func fetchSimpleDataTable(
+        credentials: XtreamCredentials,
+        streamID: Int
+    ) async throws -> XtreamCatchupCollection? {
+        let cacheKey = LiveCacheKey.simpleDataTable(
+            username: credentials.username,
+            streamID: streamID
+        )
+        if cacheConfiguration.catchupTTL > 0, let cache {
+            if let cached: XtreamCatchupCollection = await cache.value(
+                for: cacheKey,
+                as: XtreamCatchupCollection.self
+            ) {
+                logger?.event(.cacheHit(key: cacheKey, source: .memoryOrDisk))
+                if let diagnostics {
+                    await diagnostics.recordCacheHit(for: cacheKey)
+                }
+                return cached
+            }
+        }
+
+        if let diagnostics {
+            await diagnostics.recordCacheMiss(for: cacheKey)
+        }
+        logger?.event(.cacheMiss(key: cacheKey))
+
+        let endpoint = XtreamEndpoint.simpleDataTable(streamID: streamID)
+
+        do {
+            logger?.event(.requestStarted(endpoint: "get_simple_data_table"))
+            let startDate = Date()
+
+            let response: [XtreamCatchupResponse] = try await client.request(
+                endpoint,
+                credentials: credentials,
+                decoder: makeDecoder()
+            )
+            let collection = response.first(where: { $0.streamID == streamID }).map(XtreamCatchupCollection.init)
+
+            if let collection, cacheConfiguration.catchupTTL > 0, let cache {
+                await cache.store(collection, for: cacheKey, ttl: cacheConfiguration.catchupTTL)
+            }
+
+            logger?.event(.requestSucceeded(endpoint: "get_simple_data_table", duration: Date().timeIntervalSince(startDate)))
+            return collection
+        } catch {
+            logger?.error(error, context: LiveContext(endpoint: "get_simple_data_table", streamID: streamID))
             throw mapCatchupError(error)
         }
     }
