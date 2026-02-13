@@ -29,7 +29,7 @@ public protocol XtreamEPGServicing {
     func fetchSimpleDataTable(
         credentials: XtreamCredentials,
         streamID: Int
-    ) async throws -> XtreamCatchupCollection?
+    ) async throws -> [XtreamEPGEntry]
 
     func fetchXMLTVEPG(
         credentials: XtreamCredentials
@@ -221,15 +221,15 @@ public final class XtreamEPGService: XtreamEPGServicing {
     public func fetchSimpleDataTable(
         credentials: XtreamCredentials,
         streamID: Int
-    ) async throws -> XtreamCatchupCollection? {
+    ) async throws -> [XtreamEPGEntry] {
         let cacheKey = LiveCacheKey.simpleDataTable(
             username: credentials.username,
             streamID: streamID
         )
         if cacheConfiguration.catchupTTL > 0, let cache {
-            if let cached: XtreamCatchupCollection = await cache.value(
+            if let cached: [XtreamEPGEntry] = await cache.value(
                 for: cacheKey,
-                as: XtreamCatchupCollection.self
+                as: [XtreamEPGEntry].self
             ) {
                 logger?.event(.cacheHit(key: cacheKey, source: .memoryOrDisk))
                 if let diagnostics {
@@ -250,22 +250,17 @@ public final class XtreamEPGService: XtreamEPGServicing {
             logger?.event(.requestStarted(endpoint: "get_simple_data_table"))
             let startDate = Date()
 
-            let response: [XtreamCatchupResponse] = try await client.request(
-                endpoint,
-                credentials: credentials,
-                decoder: makeDecoder()
-            )
-            let collection = response.first(where: { $0.streamID == streamID }).map(XtreamCatchupCollection.init)
+            let entries = try await fetchEPGEntries(endpoint: endpoint, credentials: credentials)
 
-            if let collection, cacheConfiguration.catchupTTL > 0, let cache {
-                await cache.store(collection, for: cacheKey, ttl: cacheConfiguration.catchupTTL)
+            if cacheConfiguration.catchupTTL > 0, let cache {
+                await cache.store(entries, for: cacheKey, ttl: cacheConfiguration.catchupTTL)
             }
 
             logger?.event(.requestSucceeded(endpoint: "get_simple_data_table", duration: Date().timeIntervalSince(startDate)))
-            return collection
+            return entries
         } catch {
             logger?.error(error, context: LiveContext(endpoint: "get_simple_data_table", streamID: streamID))
-            throw mapCatchupError(error)
+            throw mapEPGError(error)
         }
     }
 

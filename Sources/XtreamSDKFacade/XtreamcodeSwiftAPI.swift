@@ -625,10 +625,10 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
     public func simpleDataTable(
         for streamID: Int,
         forceRefresh: Bool = false
-    ) async throws -> XtreamCatchupCollection? {
+    ) async throws -> [XtreamEPGEntry] {
         let credentials = credentialsSnapshot()
         let cacheKey = LiveCacheKey.simpleDataTable(username: credentials.username, streamID: streamID)
-        let fallback: XtreamCatchupCollection? = forceRefresh
+        let fallback: [XtreamEPGEntry]? = forceRefresh
             ? await cachedValue(for: cacheKey, ignoringExpiry: true)
             : nil
 
@@ -1117,7 +1117,7 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
     public func simpleDataTable(
         for streamID: Int,
         forceRefresh: Bool = false,
-        completion: @escaping (Result<XtreamCatchupCollection?, Error>) -> Void
+        completion: @escaping (Result<[XtreamEPGEntry], Error>) -> Void
     ) -> Task<Void, Never> {
         let dispatcher = ResultDispatcher(completion)
 
@@ -1417,7 +1417,7 @@ public final class XtreamcodeSwiftAPI: @unchecked Sendable {
         func simpleDataTablePublisher(
             for streamID: Int,
             forceRefresh: Bool = false
-        ) -> AnyPublisher<XtreamCatchupCollection?, Error> {
+        ) -> AnyPublisher<[XtreamEPGEntry], Error> {
             publisher { api in
                 try await api.simpleDataTable(for: streamID, forceRefresh: forceRefresh)
             }
