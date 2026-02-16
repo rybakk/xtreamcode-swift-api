@@ -58,9 +58,9 @@ public final class XtreamAuthService: XtreamAuthServicing {
 
         let userInfo = response.userInfo
         let message = userInfo.message
-        let expiration = XtreamMapping.date(from: userInfo.expDate)
-        let active = XtreamMapping.integer(from: userInfo.activeCons)
-        let max = XtreamMapping.integer(from: userInfo.maxConnections, default: 0)
+        let expiration = XtreamMapping.date(from: userInfo.expDate?.value)
+        let active = XtreamMapping.integer(from: userInfo.activeCons.value)
+        let max = XtreamMapping.integer(from: userInfo.maxConnections.value, default: 0)
 
         if userInfo.status == SubscriptionStatus.expired {
             return .accountExpired(expiration: expiration)

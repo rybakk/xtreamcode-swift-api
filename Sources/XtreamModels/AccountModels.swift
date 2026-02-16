@@ -15,10 +15,10 @@ public extension XtreamAuthSession {
         self.init(
             username: userInfo.username,
             status: userInfo.status,
-            expirationDate: XtreamMapping.date(from: userInfo.expDate),
-            isTrial: XtreamMapping.bool(from: userInfo.isTrial),
-            activeConnections: XtreamMapping.integer(from: userInfo.activeCons),
-            maxConnections: XtreamMapping.integer(from: userInfo.maxConnections, default: 1),
+            expirationDate: XtreamMapping.date(from: userInfo.expDate?.value),
+            isTrial: XtreamMapping.bool(from: userInfo.isTrial.value),
+            activeConnections: XtreamMapping.integer(from: userInfo.activeCons.value),
+            maxConnections: XtreamMapping.integer(from: userInfo.maxConnections.value, default: 1),
             allowedOutputFormats: userInfo.allowedOutputFormats
         )
     }
@@ -27,10 +27,10 @@ public extension XtreamAuthSession {
         self.init(
             username: raw.username,
             status: raw.status,
-            expirationDate: XtreamMapping.date(from: raw.expDate),
-            isTrial: XtreamMapping.bool(from: raw.isTrial),
-            activeConnections: XtreamMapping.integer(from: raw.activeCons),
-            maxConnections: XtreamMapping.integer(from: raw.maxConnections, default: 1),
+            expirationDate: XtreamMapping.date(from: raw.expDate?.value),
+            isTrial: XtreamMapping.bool(from: raw.isTrial.value),
+            activeConnections: XtreamMapping.integer(from: raw.activeCons.value),
+            maxConnections: XtreamMapping.integer(from: raw.maxConnections.value, default: 1),
             allowedOutputFormats: raw.allowedOutputFormats
         )
     }

@@ -7,13 +7,13 @@ public struct PlayerAPIResponse: Sendable, Decodable {
     public struct UserInfo: Sendable, Decodable {
         public let username: String
         public let status: SubscriptionStatus
-        public let expDate: String?
-        public let isTrial: String
-        public let activeCons: String
-        public let maxConnections: String
+        public let expDate: FlexibleString?
+        public let isTrial: FlexibleString
+        public let activeCons: FlexibleString
+        public let maxConnections: FlexibleString
         public let allowedOutputFormats: [String]
         public let auth: Int
-        public let createdAt: String?
+        public let createdAt: FlexibleString?
         public let message: String?
     }
 }

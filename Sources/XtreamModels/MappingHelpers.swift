@@ -1,5 +1,33 @@
 import Foundation
 
+/// A Decodable wrapper that accepts both String and numeric JSON values,
+/// storing the result as a String. Xtream APIs are inconsistent and may
+/// return the same field as a string or a number depending on the server.
+public struct FlexibleString: Sendable, Decodable, Equatable {
+    public let value: String
+
+    public init(_ value: String) {
+        self.value = value
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let str = try? container.decode(String.self) {
+            self.value = str
+        } else if let int = try? container.decode(Int.self) {
+            self.value = String(int)
+        } else if let double = try? container.decode(Double.self) {
+            self.value = String(double)
+        } else {
+            throw DecodingError.typeMismatch(
+                String.self,
+                .init(codingPath: decoder.codingPath,
+                      debugDescription: "Expected String or Number")
+            )
+        }
+    }
+}
+
 public enum XtreamMapping {
     public static func integer(from string: String?, default defaultValue: Int = 0) -> Int {
         guard let string, let value = Int(string) else { return defaultValue }

@@ -4,6 +4,24 @@ Tous les changements notables seront consignés dans ce fichier.
 
 Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et ce projet suit [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2026-02-16
+
+### Fixed
+- Correction du décodage `active_cons` (et autres champs user_info) qui pouvait échouer quand le serveur renvoie un nombre au lieu d'une chaîne
+- Ajout du type `FlexibleString` pour décoder de manière tolérante les champs `activeCons`, `isTrial`, `maxConnections`, `expDate` et `createdAt` (accepte indifféremment `String` ou `Number`)
+
+## [1.3.3] - 2026-02-13
+
+### Fixed
+- Correction du décodage de `get_simple_data_table` : l'endpoint retourne des listings EPG et non des données catch-up
+
+## [1.3.2] - 2026-02-13
+
+### Added
+- Nouvel endpoint `simpleDataTable(for:)` pour récupérer les données catch-up simplifiées (titre, heure, durée)
+- Appelle `/player_api.php?action=get_simple_data_table&stream_id=<id>`
+- Support async/await, callback et Combine publisher
+
 ## [1.3.1] - 2025-12-12
 
 ### Fixed
@@ -121,6 +139,9 @@ Le format est inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0
 - **Cache** : Hybride mémoire/disque avec TTL configurables
 - **Documentation** : DocC complète avec guides et exemples
 
+[1.3.4]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.4
+[1.3.3]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.3
+[1.3.2]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.2
 [1.3.1]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.1
 [1.3.0]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.3.0
 [1.2.2]: https://github.com/your-org/xtreamcode-swift-api/releases/tag/v1.2.2

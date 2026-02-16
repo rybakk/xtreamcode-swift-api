@@ -59,11 +59,11 @@ public struct XtreamAccountInfoResponse: Sendable, Decodable {
         public let password: String
         public let auth: Int
         public let status: SubscriptionStatus
-        public let expDate: String?
-        public let isTrial: String
-        public let activeCons: String
-        public let createdAt: String?
-        public let maxConnections: String
+        public let expDate: FlexibleString?
+        public let isTrial: FlexibleString
+        public let activeCons: FlexibleString
+        public let createdAt: FlexibleString?
+        public let maxConnections: FlexibleString
         public let allowedOutputFormats: [String]
         public let message: String?
     }
